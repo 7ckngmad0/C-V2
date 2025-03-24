@@ -6,50 +6,43 @@ struct Node {
     struct Node* next;
 };
 
-// prototypes ng mga functions para tawagin sa main
-void insertAtEnd(struct Node** head_ref, int new_data);
-void deleteNode(struct Node** head_ref, int key);
-void displayList(struct Node* node);
-
-void insertAtEnd(struct Node** head_ref, int new_data) {
-    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node)); 
-    struct Node* last = *head_ref; 
-
+void insertAtEnd(struct Node** head_ref, int new_data) 
+{
+    // allocation ng memory for new nodes
+    struct Node* new_node = malloc(sizeof(struct Node));
     new_node->data = new_data;
     new_node->next = NULL;
 
-    if (*head_ref == NULL) { // yung node yung gagawing head pag empty yung list
+    if (*head_ref == NULL) 
+    {
         *head_ref = new_node;
         return;
     }
 
-    while (last->next != NULL) { // Traversing lang to
-        last = last->next;
-    }
-
-    last->next = new_node; // linking ng new node sa last
+    struct Node* last = *head_ref;
+    while (last->next) last = last->next;
+    last->next = new_node;
 }
 
-// function para mag delete ng node sa linked list
-void deleteNode(struct Node** head_ref, int key) {
-    struct Node* temp = *head_ref;
-    struct Node* prev = NULL;
+void deleteNode(struct Node** head_ref, int key) //self-explanatory na
+{
+    struct Node *temp = *head_ref, *prev = NULL;
 
-    // if yung head node mismo yung tatanggalin
-    if (temp != NULL && temp->data == key) 
+    if (temp && temp->data == key) // for deleting the first node or yung head
     {
         *head_ref = temp->next;
-        free(temp); 
+        free(temp);
         return;
     }
 
-    while (temp != NULL && temp->data != key) 
+    while (temp && temp->data != key) // for searching ng node na ide-delete
     {
         prev = temp;
         temp = temp->next;
     }
 
-    if (temp == NULL) {
+    if (!temp) 
+    {
         printf("Node with data %d not found.\n", key);
         return;
     }
@@ -58,33 +51,25 @@ void deleteNode(struct Node** head_ref, int key) {
     free(temp);
 }
 
-void displayList(struct Node* node) {
-    while (node != NULL) {
+void displayList(struct Node* node) 
+{
+    while (node) 
+    {
         printf("%d -> ", node->data);
         node = node->next;
     }
-
-    // visualization ng last node
-    printf("NULL\n"); 
+    printf("NULL\n");
 }
 
-int main() 
-{
-    struct Node* head = NULL; 
+int main() {
+    struct Node* head = NULL;
     int choice, data;
 
-    while (1) 
-    {
-        printf("\nLinked List Operations:\n");
-        printf("1. Insert at end\n");
-        printf("2. Delete a node\n");
-        printf("3. Display the list\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
+    while (1) {
+        printf("\nLinked List Operations:\n1. Insert at end\n2. Delete a node\n3. Display the list\n4. Exit\nEnter your choice: ");
         scanf("%d", &choice);
 
-        switch (choice) 
-        {
+        switch (choice) {
             case 1:
                 printf("Enter data to insert: ");
                 scanf("%d", &data);
@@ -102,11 +87,9 @@ int main()
                 break;
             case 4:
                 printf("Exiting...\n");
-                exit(0);
+                return 0;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
     }
-
-    return 0;
 }
