@@ -12,6 +12,7 @@ struct Student
     float grade;
 };
 
+// prototypes ng mga functions para tawagin sa main
 void addStudent(struct Student students[], int *count);
 void displayStudents(struct Student students[], int count);
 int searchStudent(struct Student students[], int count, int id);
@@ -75,6 +76,7 @@ int main() {
 
     while (1) 
     {
+        // user interface
         printf("\nStudent Management System:\n");
         printf("1. Add Student\n");
         printf("2. Display Students\n");

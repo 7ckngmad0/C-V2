@@ -6,6 +6,7 @@ struct Node {
     struct Node* next;
 };
 
+// prototypes ng mga functions para tawagin sa main
 void insertAtEnd(struct Node** head_ref, int new_data);
 void deleteNode(struct Node** head_ref, int key);
 void displayList(struct Node* node);
@@ -22,11 +23,11 @@ void insertAtEnd(struct Node** head_ref, int new_data) {
         return;
     }
 
-    while (last->next != NULL) { // Traverse to the last node
+    while (last->next != NULL) { // Traversing lang to
         last = last->next;
     }
 
-    last->next = new_node; // Link the new node at the end
+    last->next = new_node; // linking ng new node sa last
 }
 
 // function para mag delete ng node sa linked list
@@ -63,7 +64,7 @@ void displayList(struct Node* node) {
         node = node->next;
     }
 
-    // visualization of the last node
+    // visualization ng last node
     printf("NULL\n"); 
 }
 
