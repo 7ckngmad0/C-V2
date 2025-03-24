@@ -8,14 +8,9 @@
 struct Student 
 {
     int id;
-    char name[NAME_LENGTH]; 
+    char name[NAME_LENGTH];
     float grade;
 };
-
-// prototypes ng mga functions para tawagin sa main
-void addStudent(struct Student students[], int *count);
-void displayStudents(struct Student students[], int count);
-int searchStudent(struct Student students[], int count, int id);
 
 void addStudent(struct Student students[], int *count) 
 {
@@ -26,31 +21,28 @@ void addStudent(struct Student students[], int *count)
     }
 
     struct Student new_student;
-
     printf("Enter Student ID: ");
     scanf("%d", &new_student.id);
     printf("Enter Student Name: ");
     getchar();
     fgets(new_student.name, NAME_LENGTH, stdin);
-    new_student.name[strcspn(new_student.name, "\n")] = 0; 
+    new_student.name[strcspn(new_student.name, "\n")] = 0;
     printf("Enter Student Grade: ");
     scanf("%f", &new_student.grade);
 
-    students[*count] = new_student; 
-    (*count)++;
+    students[(*count)++] = new_student; 
     printf("Student added successfully!\n");
 }
 
 void displayStudents(struct Student students[], int count) 
 {
-    if (count == 0) {
+    if (count == 0) 
+    {
         printf("No students to display.\n");
         return;
     }
 
-    printf("\nList of Students:\n");
-    printf("ID\tName\t\tGrade\n");
-    printf("-----------------------------------\n");
+    printf("\nList of Students:\nID\tName\t\tGrade\n-----------------------------------\n");
     for (int i = 0; i < count; i++) 
     {
         printf("%d\t%s\t%.2f\n", students[i].id, students[i].name, students[i].grade);
@@ -61,59 +53,42 @@ int searchStudent(struct Student students[], int count, int id)
 {
     for (int i = 0; i < count; i++) 
     {
-        if (students[i].id == id) 
-        {
-            return i; 
-        }
+        if (students[i].id == id) return i;
     }
-    return -1; 
+    return -1;
 }
 
 int main() {
-    struct Student students[MAX_STUDENTS]; // array ng mga tanga
-    int count = 0; // bilang ng tanga
-    int choice, id, index;
+    struct Student students[MAX_STUDENTS];
+    int count = 0, choice, id;
 
     while (1) 
     {
-        // user interface
-        printf("\nStudent Management System:\n");
-        printf("1. Add Student\n");
-        printf("2. Display Students\n");
-        printf("3. Search Student by ID\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
+        printf("\nStudent Management System:\n1. Add Student\n2. Display Students\n3. Search Student by ID\n4. Exit\nEnter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) 
         {
-            case 1:
-                addStudent(students, &count);
-                break;
-            case 2:
-                displayStudents(students, count);
-                break;
+            case 1: addStudent(students, &count); break;
+            case 2: displayStudents(students, count); break;
             case 3:
                 printf("Enter Student ID to search: ");
                 scanf("%d", &id);
-                index = searchStudent(students, count, id);
+                int index = searchStudent(students, count, id);
                 if (index != -1) 
                 {
-                    printf("Student found: ID: %d, Name: %s, Grade: %.2f\n", 
-                           students[index].id, students[index].name, students[index].grade);
+                    printf("Student found: ID: %d, Name: %s, Grade: %.2f\n", students[index].id, students[index].name, students[index].grade);
                 } 
                 else 
                 {
                     printf("Student with ID %d not found.\n", id);
                 }
                 break;
-            case 4:
-                printf("Exiting...\n");
-                exit(0);
-            default:
+            case 4: 
+                printf("Exiting...\n"); 
+                return 0;
+            default: 
                 printf("Invalid choice. Please try again.\n");
         }
     }
-
-    return 0;
 }
