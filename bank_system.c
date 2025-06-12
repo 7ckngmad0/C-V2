@@ -3,7 +3,6 @@
 #include <string.h>
 
 #define CHAR 13
-#define TB 9
 #define BSP 8
 
 struct user
@@ -24,7 +23,8 @@ int main()
     struct user u;
     int choice, choice2, choice3, track = 0;
     float withdraw, deposit;
-    u.account_balance = 0.00;
+    memset(&u, 0, sizeof(struct user));  // Initialize all fields to 0
+    u.account_balance = 0.0;  // Explicitly set initial balance
     char password2[50];
 
     printf("==Welcome to my bank management==\n\n");
@@ -66,12 +66,14 @@ int main()
                 case 1:
                     printf("Enter the amount that you want to deposit: ");
                     scanf("%f", &deposit);
+                    printf("Current balance before deposit: %.2f\n", u.account_balance);
+                    printf("Depositing amount: %.2f\n", deposit);
                     u.account_balance += deposit;
+                    printf("New balance after deposit: %.2f\n", u.account_balance);
                     bank = freopen("BANK MANAGEMENT.txt", "r+", bank);
                     fseek(bank, -(long)sizeof(struct user), SEEK_CUR);
                     fwrite(&u, sizeof(struct user), 1, bank);
                     fflush(bank);
-                    printf("Your new account balance is %.2f\n", u.account_balance);
                     break;
 
                 case 2:
@@ -141,12 +143,14 @@ int main()
                 case 1:
                     printf("Enter the amount that you want to deposit: ");
                     scanf("%f", &deposit);
+                    printf("Current balance before deposit: %.2f\n", u2.account_balance);
+                    printf("Depositing amount: %.2f\n", deposit);
                     u2.account_balance += deposit;
+                    printf("New balance after deposit: %.2f\n", u2.account_balance);
                     bank = freopen("BANK MANAGEMENT.txt", "r+", bank);
                     fseek(bank, -(long)sizeof(struct user), SEEK_CUR);
                     fwrite(&u2, sizeof(struct user), 1, bank);
                     fflush(bank);
-                    printf("Your new account balance is %.2f\n", u2.account_balance);
                     break;
 
                 case 2:
@@ -200,6 +204,7 @@ int main()
 
 void userInp (char ch[50])
 {
+    fflush(stdin);  // Clear input buffer
     fgets(ch, 50, stdin);
     ch[strlen(ch) - 1] = '\0';
 }
@@ -211,7 +216,7 @@ void passWord (char pw[50])
     while(1)
     {
         ch = getch();
-        if (ch == TB || ch == CHAR)
+        if (ch == CHAR)
         {
             pw[i] = '\0';
             printf("\n");
