@@ -84,6 +84,8 @@ void addParts (struct inv_part parts[], int *count, FILE *inventory)
 
     while(getchar() != '\n');
 
+    while (*count < COMP_PARTS)
+    {
     printf("Enter the details for Part %d\n", *count + 1);
 
     printf("Enter item ID: ");
@@ -109,6 +111,8 @@ void addParts (struct inv_part parts[], int *count, FILE *inventory)
     (*count)++;
     saveToFile(parts, *count, inventory);
     printf("Part added successfully!\n\n");
+    }
+    printf("The inventory is full.\n");
 }
 
 void dispParts (struct inv_part parts[], int count)
@@ -119,11 +123,11 @@ void dispParts (struct inv_part parts[], int count)
         return;
     }
 
-    printf("ID   %-10s %-12s %-8s %-6s\n", "Part Name", "Part Number", "Quantity", "Price");
+    printf("%-5s %-15s %-12s %-10s %-8s\n", "ID", "Part Name", "Part Number", "Quantity", "Price");
 
     for(int i = 0; i < count; i++) 
     {
-        printf("%-4d %-10s %-12d %-8d %-6d\n", 
+        printf("%-5d %-15s %-12d %-10d %-8d\n", 
         parts[i].ID, parts[i].name, parts[i].part_number, parts[i].quantity, parts[i].ppU);
     }
 
@@ -133,7 +137,12 @@ void dispParts (struct inv_part parts[], int count)
     {
         sortParts(parts, count);
         printf("\nParts sorted by their price per unit (ppu):\n");
-        dispParts(parts, count);
+        printf("%-5s %-15s %-12s %-10s %-8s\n", "ID", "Part Name", "Part Number", "Quantity", "Price");
+        for(int i = 0; i < count; i++) 
+        {
+            printf("%-5d %-15s %-12d %-10d %-8d\n", 
+            parts[i].ID, parts[i].name, parts[i].part_number, parts[i].quantity, parts[i].ppU);
+        }
     }
 }   
 
