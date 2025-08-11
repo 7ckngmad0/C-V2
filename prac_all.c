@@ -41,7 +41,7 @@ do
             int index = search_students(students, count, id);
             if (index != -1)
             {
-                printf("Student Found: ID: %d, Name: %s, Grade: %s, Course: %s\n", 
+                printf("Student Found: ID: %d, Name: %s, Grades: %s, Course: %s\n", 
                        students[index].st_id, students[index].st_name, students[index].st_grade, students[index].st_course);
             }
             else
